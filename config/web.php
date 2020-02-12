@@ -6,15 +6,43 @@ $db = require __DIR__ . '/db.php';
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+//    'defaultRoute' => 'main/index', // Вид по-умолчанию
+    'modules' => [
+        'languages' => [
+            'class' => 'app\modules\languages\Module',
+            //Языки используемые в приложении
+            'languages' => [
+                'Українська' => 'ua',
+                'Русский' => 'ru',
+                'English' => 'en',
+            ],
+            'default_language' => 'ru', //основной язык (по-умолчанию)
+            'show_default' => false, //true - показывать в URL основной язык, false - нет
+        ],
+    ],
+    'bootstrap' => [
+        'log',
+        'languages'
+    ],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+        'i18n' => [
+            'translations' => [
+                'app' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    //'forceTranslation' => true,
+                    'basePath' => '@messages',
+                ],
+            ],
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'DLxQjtMf3G_S4DjoKBMCpEv7Dfvm1yWD',
+            'baseUrl' => '',
+            'class' => 'app\components\Request'
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -43,14 +71,18 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'class' => 'app\components\UrlManager',
             'rules' => [
+                'languages' => 'languages/default/index', //для модуля мультиязычности
+                '/' => 'main/index',
+                '<action:(contact|login|logout|language|about|signup)>' => 'main/<action>',
             ],
         ],
-        */
+
     ],
     'params' => $params,
 ];
