@@ -6,7 +6,7 @@ $db = require __DIR__ . '/db.php';
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-//    'defaultRoute' => 'main/index', // Вид по-умолчанию
+    'defaultRoute' => 'main/index', // Вид по-умолчанию
     'modules' => [
         'languages' => [
             'class' => 'app\modules\languages\Module',
@@ -33,7 +33,7 @@ $config = [
                 'app' => [
                     'class' => 'yii\i18n\PhpMessageSource',
                     //'forceTranslation' => true,
-                    'basePath' => '@messages',
+                    'basePath' => '@app/messages',
                 ],
             ],
         ],
