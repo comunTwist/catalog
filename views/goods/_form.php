@@ -11,6 +11,9 @@ use yii\widgets\ActiveForm;
 <div class="goods-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    <?= $form->field($model, 'current_category')->dropDownList($categories_map, [
+        'multiple' => true,
+    ]) ?>
 
     <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
 

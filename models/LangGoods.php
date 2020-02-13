@@ -32,6 +32,7 @@ class LangGoods extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['goods_id', 'lang', 'name'], 'required'],
             [['goods_id'], 'integer'],
             [['lang', 'description'], 'string'],
             [['name'], 'string', 'max' => 255],
@@ -46,7 +47,7 @@ class LangGoods extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'goods_id' => Yii::t('app', 'Goods ID'),
+            'goods_id' => Yii::t('app', 'Goods slug'),
             'lang' => Yii::t('app', 'Lang'),
             'name' => Yii::t('app', 'Name'),
             'description' => Yii::t('app', 'Description'),

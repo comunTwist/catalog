@@ -31,6 +31,7 @@ class LangCategory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['category_id', 'lang', 'name'], 'required'],
             [['category_id'], 'integer'],
             [['lang', 'description'], 'string'],
             [['name'], 'string', 'max' => 255],
@@ -45,7 +46,7 @@ class LangCategory extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'category_id' => Yii::t('app', 'Category ID'),
+            'category_id' => Yii::t('app', 'Category slug'),
             'lang' => Yii::t('app', 'Lang'),
             'name' => Yii::t('app', 'Name'),
             'description' => Yii::t('app', 'Description'),

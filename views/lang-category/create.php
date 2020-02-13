@@ -3,13 +3,13 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Goods */
+/* @var $model app\models\LangCategory */
 
-$this->title = Yii::t('app', 'Create Goods');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Goods'), 'url' => ['index']];
+$this->title = Yii::t('app', 'Create Lang Category');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Lang Categories'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="goods-create">
+<div class="lang-category-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

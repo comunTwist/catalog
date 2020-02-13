@@ -17,6 +17,8 @@ use Yii;
  */
 class Goods extends \yii\db\ActiveRecord
 {
+    public $current_category;
+
     /**
      * {@inheritdoc}
      */
@@ -31,7 +33,7 @@ class Goods extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['slug'], 'required'],
+            [['slug', 'price', 'current_category'], 'required'],
             [['price'], 'number'],
             [['slug'], 'string', 'max' => 255],
             [['slug'], 'unique'],
@@ -76,5 +78,32 @@ class Goods extends \yii\db\ActiveRecord
     public function getImage()
     {
         return $this->hasMany(Image::class, ['itemId' => 'id'])->onCondition(['modelName' => Goods::class]);
+    }
+
+    /**
+     * Возвращаем все товары
+     */
+    public function getAllGoods()
+    {
+        return $this->find()->all();
+    }
+
+    /**
+     * Связываем товар с категориями
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        if (!$insert) {
+            $this->unlinkAll('category', true);
+        }
+        if (!empty($this->current_category)) {
+            foreach ($this->current_category as $id) {
+                $category = Category::findOne($id);
+                if ($category) {
+                    $this->link('category', $category);
+                }
+            }
+        }
+        parent::afterSave($insert, $changedAttributes);
     }
 }

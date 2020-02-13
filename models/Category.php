@@ -63,4 +63,12 @@ class Category extends \yii\db\ActiveRecord
     {
         return $this->hasMany(LangCategory::class, ['category_id' => 'id']);
     }
+
+    /**
+     * Возвращаем все категории
+     */
+    public function getCategories()
+    {
+        return $this->find()->all();
+    }
 }

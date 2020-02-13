@@ -1,6 +1,7 @@
 <?php
 
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
 use app\widgets\Alert;
@@ -39,10 +40,22 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' =>  Yii::t('app', 'Главная'), 'url' => ['/main/index']],
-            ['label' =>  Yii::t('app', 'Категории'), 'url' => ['/category/index']],
-            ['label' =>  Yii::t('app', 'Товары'), 'url' => ['/goods/index']],
-        ],
+            ['label' => Yii::t('app', 'Home'), 'url' => ['/main/index']],
+            [
+                'label' => Yii::t('app', 'Categories'),
+                'items' => [
+                    ['label' => Yii::t('app', 'Categories'), 'url' => ['/category/index']],
+                    ['label' => Yii::t('app', 'Lang Categories'), 'url' => ['/lang-category/index']],
+                ]
+            ],
+            [
+                'label' => Yii::t('app', 'Goods'),
+                'items' => [
+                    ['label' => Yii::t('app', 'Goods'), 'url' => ['/goods/index']],
+                    ['label' => Yii::t('app', 'Lang Goods'), 'url' => ['/lang-goods/index']],
+                ]
+            ],
+        ]
     ]);
     echo ListWidget::widget();
     NavBar::end();

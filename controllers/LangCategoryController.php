@@ -2,27 +2,43 @@
 
 namespace app\controllers;
 
-use app\models\Category;
 use Yii;
-use app\models\Goods;
+use app\models\Category;
+use app\models\LangCategory;
 use yii\data\ActiveDataProvider;
-use yii\helpers\ArrayHelper;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 /**
- * GoodsController implements the CRUD actions for Goods model.
+ * LangCategoryController implements the CRUD actions for LangCategory model.
  */
-class GoodsController extends AppController
+class LangCategoryController extends Controller
 {
     /**
-     * Lists all Goods models.
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * Lists all LangCategory models.
      * @return mixed
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Goods::find(),
+            'query' => LangCategory::find(),
         ]);
 
         return $this->render('index', [
@@ -31,7 +47,7 @@ class GoodsController extends AppController
     }
 
     /**
-     * Displays a single Goods model.
+     * Displays a single LangCategory model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -44,27 +60,28 @@ class GoodsController extends AppController
     }
 
     /**
-     * Creates a new Goods model.
+     * Creates a new LangCategory model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($category_id)
     {
-        $model = new Goods();
+        $model = new LangCategory();
 
-        if ($model->load(Yii::$app->request->post()) && !empty($model->current_category) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        $category_model = new Category();
-        $categories = $category_model->getCategories();
+        $main_model = new Category();
+        $categories = $main_model->getCategories();
         $categories_map = ArrayHelper::map($categories, 'id', 'slug');
+        $model->category_id = $category_id;
 
         return $this->render('create', compact('model', 'categories_map'));
     }
 
     /**
-     * Updates an existing Goods model.
+     * Updates an existing LangCategory model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -74,20 +91,19 @@ class GoodsController extends AppController
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && !empty($model->current_category) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        $model->current_category = $model->category;
-        $category_model = new Category();
-        $categories = $category_model->getCategories();
+        $main_model = new Category();
+        $categories = $main_model->getCategories();
         $categories_map = ArrayHelper::map($categories, 'id', 'slug');
 
         return $this->render('update', compact('model', 'categories_map'));
     }
 
     /**
-     * Deletes an existing Goods model.
+     * Deletes an existing LangCategory model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -101,19 +117,15 @@ class GoodsController extends AppController
     }
 
     /**
-     * Finds the Goods model based on its primary key value.
+     * Finds the LangCategory model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Goods the loaded model
+     * @return LangCategory the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        $model = Goods::find()
-            ->with(['category'])
-            ->where(['id' => $id])
-            ->one();
-        if ($model !== null) {
+        if (($model = LangCategory::findOne($id)) !== null) {
             return $model;
         }
 

@@ -33,9 +33,9 @@ class m200213_091559_db_structure extends Migration
         // Таблица переводов категорий
         $this->createTable('{{%lang_category}}', [
             'id' => $this->primaryKey(),
-            'category_id' => $this->integer(),
+            'category_id' => $this->integer()->notNull(),
             'lang' => "ENUM('ru', 'en') NOT NULL DEFAULT 'ru'",
-            'name' => $this->string(255),
+            'name' => $this->string(255)->notNull(),
             'description' => $this->text()
         ], $tableOptions);
 
@@ -49,9 +49,9 @@ class m200213_091559_db_structure extends Migration
         // Таблица переводов товаров
         $this->createTable('{{%lang_goods}}', [
             'id' => $this->primaryKey(),
-            'goods_id' => $this->integer(),
+            'goods_id' => $this->integer()->notNull(),
             'lang' => "ENUM('ru', 'en') NOT NULL DEFAULT 'ru'",
-            'name' => $this->string(255),
+            'name' => $this->string(255)->notNull(),
             'description' => $this->text()
         ], $tableOptions);
 
@@ -65,10 +65,10 @@ class m200213_091559_db_structure extends Migration
         // Таблица отзывов
         $this->createTable('{{%review}}', [
             'id' => $this->primaryKey(),
-            'lang_goods_id' => $this->integer(),
+            'lang_goods_id' => $this->integer()->notNull(),
             'time' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
-            'email' => $this->string(255),
-            'message' => $this->text()
+            'email' => $this->string(255)->notNull(),
+            'message' => $this->text()->notNull()
         ], $tableOptions);
 
 
