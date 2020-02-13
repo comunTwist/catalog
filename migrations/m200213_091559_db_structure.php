@@ -34,7 +34,7 @@ class m200213_091559_db_structure extends Migration
         $this->createTable('{{%lang_category}}', [
             'id' => $this->primaryKey(),
             'category_id' => $this->integer(),
-            'lang' => "ENUM('ua', 'ru', 'en') NOT NULL DEFAULT 'ru'",
+            'lang' => "ENUM('ru', 'en') NOT NULL DEFAULT 'ru'",
             'name' => $this->string(255),
             'description' => $this->text()
         ], $tableOptions);
@@ -50,7 +50,7 @@ class m200213_091559_db_structure extends Migration
         $this->createTable('{{%lang_goods}}', [
             'id' => $this->primaryKey(),
             'goods_id' => $this->integer(),
-            'lang' => "ENUM('ua', 'ru', 'en') NOT NULL DEFAULT 'ru'",
+            'lang' => "ENUM('ru', 'en') NOT NULL DEFAULT 'ru'",
             'name' => $this->string(255),
             'description' => $this->text()
         ], $tableOptions);

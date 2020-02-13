@@ -12,7 +12,6 @@ $config = [
             'class' => 'app\modules\languages\Module',
             //Языки используемые в приложении
             'languages' => [
-                'Українська' => 'ua',
                 'Русский' => 'ru',
                 'English' => 'en',
             ],
