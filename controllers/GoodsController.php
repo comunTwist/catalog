@@ -9,6 +9,7 @@ use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * GoodsController implements the CRUD actions for Goods model.
@@ -53,6 +54,9 @@ class GoodsController extends AppController
         $model = new Goods();
 
         if ($model->load(Yii::$app->request->post()) && !empty($model->current_category) && $model->save()) {
+            // Загружаем галерею
+            $model->gallery = UploadedFile::getInstances($model, 'gallery');
+            $model->uploadGallery();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -75,15 +79,18 @@ class GoodsController extends AppController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && !empty($model->current_category) && $model->save()) {
+            // Загружаем галерею
+            $model->gallery = UploadedFile::getInstances($model, 'gallery');
+            $model->uploadGallery();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         $model->current_category = $model->category;
+        $images = $model->getImages();
         $category_model = new Category();
         $categories = $category_model->getCategories();
         $categories_map = ArrayHelper::map($categories, 'id', 'slug');
-
-        return $this->render('update', compact('model', 'categories_map'));
+        return $this->render('update', compact('model', 'categories_map', 'images'));
     }
 
     /**
@@ -95,8 +102,9 @@ class GoodsController extends AppController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model = $this->findModel($id);
+        $model->removeImages();
+        $model->delete();
         return $this->redirect(['index']);
     }
 

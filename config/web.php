@@ -18,6 +18,17 @@ $config = [
             'default_language' => 'ru', //основной язык (по-умолчанию)
             'show_default' => false, //true - показывать в URL основной язык, false - нет
         ],
+
+        'yii2images' => [//подключаем модуль загрузки картинок
+            'class' => 'rico\yii2images\Module',
+            //be sure, that permissions ok
+            //if you cant avoid permission errors you have to create "images" folder in web root manually and set 777 permissions
+            'imagesStorePath' => 'upload/store', //где будут хранится оригиналы картинок
+            'imagesCachePath' => 'upload/cache', //где будут хранится обрезанные картинки
+            'graphicsLibrary' => 'GD', //библиотека для работы с картинками
+            'placeHolderPath' => '@webroot/upload/store/no-image.png', // картинка-заглушка
+//            'imageCompressionQuality' => 100, // Сейчас не работает.
+        ],
     ],
     'bootstrap' => [
         'log',
@@ -78,7 +89,9 @@ $config = [
             'rules' => [
                 'languages' => 'languages/default/index', //для модуля мультиязычности
                 '/' => 'main/index',
-                '<action:(contact|login|logout|language|about|signup)>' => 'main/<action>',
+                '<id:([0-9])+>/images/image-by-item-and-alias' => 'yii2images/images/image-by-item-and-alias', //правило для формирования корректного адреса до картинки
+                'images/image-by-item-and-alias' => 'yii2images/images/image-by-item-and-alias', //правило для вывода заглушки
+                '<action:\w+>' => 'main/<action>',
             ],
         ],
 

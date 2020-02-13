@@ -117,3 +117,7 @@ a.desc:after {
 .breadcrumb {
     margin-top: 10px;
 }
+
+.form-group .cover-img {
+    display: inline-block;
+}

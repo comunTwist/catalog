@@ -17,7 +17,8 @@ use Yii;
  */
 class Goods extends \yii\db\ActiveRecord
 {
-    public $current_category;
+    public $current_category; // связанные категории
+    public $gallery; // галерея фотографий
 
     /**
      * {@inheritdoc}
@@ -25,6 +26,18 @@ class Goods extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'goods';
+    }
+
+    /**
+     * поведение для картинок
+     */
+    public function behaviors()
+    {
+        return [
+            'image' => [
+                'class' => 'rico\yii2images\behaviors\ImageBehave',
+            ]
+        ];
     }
 
     /**
@@ -37,6 +50,7 @@ class Goods extends \yii\db\ActiveRecord
             [['price'], 'number'],
             [['slug'], 'string', 'max' => 255],
             [['slug'], 'unique'],
+            [['gallery'], 'file', 'extensions' => 'png, jpg', 'maxFiles' => 5], //правила для загрузки картинок
         ];
     }
 
@@ -86,6 +100,23 @@ class Goods extends \yii\db\ActiveRecord
     public function getAllGoods()
     {
         return $this->find()->all();
+    }
+
+    /**
+     * Загружаем фото
+     */
+    public function uploadGallery()
+    {
+        if ($this->validate()) {
+            foreach ($this->gallery as $file) {
+                $path = 'upload/store/' . $file->baseName . '.' . $file->extension; //путь для сохранения файла (хотя он указан в конфигурации)
+                $file->saveAs($path); //сохраняем картинку
+                $this->attachImage($path); //прикрепляем картинку к модели
+                @unlink($path); //удаляем оригинальную картинку
+            }
+            return true;
+        }
+        return false;
     }
 
     /**

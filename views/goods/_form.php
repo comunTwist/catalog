@@ -10,7 +10,12 @@ use yii\widgets\ActiveForm;
 
 <div class="goods-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'method' => 'post',
+        'options' => ['enctype' => 'multipart/form-data'],
+
+    ]); ?>
+
     <?= $form->field($model, 'current_category')->dropDownList($categories_map, [
         'multiple' => true,
     ]) ?>
@@ -18,6 +23,17 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'price')->textInput() ?>
+
+    <?= $form->field($model, 'gallery[]')->fileInput(['multiple' => true, 'accept' => 'image/*']) ?>
+    <?php if (isset($images)): ?>
+        <div class="form-group">
+            <?php foreach ($images as $img): ?>
+                <div class="cover-img">
+                    <?= Html::img($img->getUrl('140x')); ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
