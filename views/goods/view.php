@@ -37,6 +37,23 @@ $this->params['breadcrumbs'][] = $this->title;
             'price',
             'translate.name',
             'translate.description',
+            [
+                'label' => Yii::t('app', 'Photo'),
+                'format' => 'raw',
+                'value' => function ($data) {
+                    $images = $data->getImages();
+                    if (!empty($data->images)) {
+                        ob_start();
+                        foreach ($images as $img): ?>
+                            <div class="inline-img">
+                                <?= Html::img($img->getUrl('140x')); ?>
+                            </div>
+                        <?php endforeach;
+                        return ob_get_clean();
+                    }
+                    return '';
+                },
+            ],
         ],
     ]) ?>
 
@@ -51,7 +68,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'email',
                 'message',
                 [
-                    'attribute' => 'check',
                     'label' => Yii::t('app', 'Edit'),
                     'format' => 'raw',
                     'value' => function ($data) {

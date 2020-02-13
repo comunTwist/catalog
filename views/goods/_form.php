@@ -28,7 +28,7 @@ use yii\widgets\ActiveForm;
     <?php if (isset($images)): ?>
         <div class="form-group">
             <?php foreach ($images as $img): ?>
-                <div class="cover-img">
+                <div class="inline-img">
                     <?= Html::img($img->getUrl('140x')); ?>
                 </div>
             <?php endforeach; ?>

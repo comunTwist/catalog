@@ -81,6 +81,7 @@ class LangGoodsController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
+
         $language = $model->lang;
         $main_model = new Goods();
         $goods = $main_model->getAllGoods();

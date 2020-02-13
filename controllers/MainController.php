@@ -2,17 +2,9 @@
 
 namespace app\controllers;
 
-use Yii;
-use yii\filters\AccessControl;
-use yii\web\Response;
-use yii\filters\VerbFilter;
-use yii\db\Expression;
+use app\models\Goods;
+use yii\data\ActiveDataProvider;
 
-use app\models\User;
-use app\models\LoginForm;
-use app\models\SignUpForm;
-use app\models\SearchForm;
-use app\models\Advert;
 
 class MainController extends AppController
 {
@@ -21,8 +13,20 @@ class MainController extends AppController
     public function actionIndex()
     {
 
-
-        return $this->render('index');
+        $dataProvider = new ActiveDataProvider([
+            'query' => Goods::find()->with([
+                'category' => function ($q) {
+                    $q->with([
+                        'translate'
+                    ]);
+                },
+                'translate'
+            ]),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+        return $this->render('index', compact('dataProvider'));
     }
 
 

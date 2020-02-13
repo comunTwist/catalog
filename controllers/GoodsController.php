@@ -52,7 +52,7 @@ class GoodsController extends AppController
                 'pageSize' => 20,
             ],
         ]);
-//        debug($dataProvider); die();
+//   debug($model); die();
         return $this->render('view', compact('model', 'model_review', 'dataProvider'));
     }
 

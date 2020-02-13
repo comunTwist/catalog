@@ -72,12 +72,13 @@ class LangCategoryController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $language = Yii::$app->language;
         $main_model = new Category();
         $categories = $main_model->getCategories();
         $categories_map = ArrayHelper::map($categories, 'id', 'slug');
         $model->category_id = $category_id;
 
-        return $this->render('create', compact('model', 'categories_map'));
+        return $this->render('create', compact('model', 'categories_map', 'language'));
     }
 
     /**
@@ -95,11 +96,12 @@ class LangCategoryController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $language = $model->lang;
         $main_model = new Category();
         $categories = $main_model->getCategories();
         $categories_map = ArrayHelper::map($categories, 'id', 'slug');
 
-        return $this->render('update', compact('model', 'categories_map'));
+        return $this->render('update', compact('model', 'categories_map', 'language'));
     }
 
     /**

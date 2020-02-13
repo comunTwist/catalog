@@ -12,6 +12,7 @@ use Yii;
  *
  * @property Goods[] $Goods
  * @property LangCategory[] $langCategories
+ * *@property LangCategory $translate
  */
 class Category extends \yii\db\ActiveRecord
 {
@@ -62,6 +63,17 @@ class Category extends \yii\db\ActiveRecord
     public function getLangCategories()
     {
         return $this->hasMany(LangCategory::class, ['category_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[CurrentCategory]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTranslate()
+    {
+        $language = Yii::$app->language;
+        return $this->hasOne(LangCategory::class, ['category_id' => 'id'])->onCondition(['lang' => $language]);
     }
 
     /**

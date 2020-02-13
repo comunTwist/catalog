@@ -103,7 +103,7 @@ class Goods extends \yii\db\ActiveRecord
      */
     public function getImage()
     {
-        return $this->hasMany(Image::class, ['itemId' => 'id'])->onCondition(['modelName' => Goods::class]);
+        return $this->hasMany(Image::class, ['itemId' => 'id'])->onCondition(['modelName' => 'Goods']);
     }
 
     /**
