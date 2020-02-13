@@ -58,12 +58,13 @@ class LangGoodsController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $language = Yii::$app->language;
         $main_model = new Goods();
         $goods = $main_model->getAllGoods();
         $goods_map = ArrayHelper::map($goods, 'id', 'slug');
         $model->goods_id = $goods_id;
 
-        return $this->render('create', compact('model', 'goods_map'));
+        return $this->render('create', compact('model', 'goods_map', 'language'));
     }
 
     /**
@@ -80,12 +81,12 @@ class LangGoodsController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
-
+        $language = $model->lang;
         $main_model = new Goods();
         $goods = $main_model->getAllGoods();
         $goods_map = ArrayHelper::map($goods, 'id', 'slug');
 
-        return $this->render('update', compact('model', 'goods_map'));
+        return $this->render('update', compact('model', 'goods_map', 'language'));
     }
 
     /**

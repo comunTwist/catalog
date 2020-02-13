@@ -18,7 +18,11 @@ use yii\widgets\ActiveForm;
         ]
     ]) ?>
 
-    <?= $form->field($model, 'lang')->dropDownList(['ru' => 'Ru', 'en' => 'En',]) ?>
+    <?= $form->field($model, 'lang')->dropDownList(['ru' => 'Ru', 'en' => 'En',],[
+        'options' => [
+            $language => ['selected' => true]
+        ]
+    ]) ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 

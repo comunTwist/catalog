@@ -35,6 +35,7 @@ class Review extends \yii\db\ActiveRecord
             [['time'], 'safe'],
             [['message'], 'string'],
             [['email'], 'string', 'max' => 255],
+            [['email'], 'email'],
             [['lang_goods_id'], 'exist', 'skipOnError' => true, 'targetClass' => LangGoods::class, 'targetAttribute' => ['lang_goods_id' => 'id']],
         ];
     }
@@ -48,7 +49,7 @@ class Review extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'lang_goods_id' => Yii::t('app', 'Lang Goods ID'),
             'time' => Yii::t('app', 'Time'),
-            'email' => Yii::t('app', 'Email'),
+            'email' => Yii::t('app', 'E-mail'),
             'message' => Yii::t('app', 'Message'),
         ];
     }

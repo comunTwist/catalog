@@ -4,6 +4,7 @@ return [
     'Lang' => 'Язык',
     'Name' => 'Название',
     'Description' => 'Описание',
+    'Edit' => 'Редактировать',
     'Update' => 'Обновить',
     'Delete' => 'Удалить',
     'Categories' => 'Категории',
@@ -17,4 +18,6 @@ return [
     'Lang Goods' => 'Переводы товаров',
     'Create Goods' => 'Создать товар',
     'Create Lang Goods' => 'Создать перевод товара',
+    'Review' => 'Комментарии',
+    'Message' => 'Сообщение',
 ];

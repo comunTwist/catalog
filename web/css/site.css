@@ -121,3 +121,11 @@ a.desc:after {
 .form-group .cover-img {
     display: inline-block;
 }
+
+.navbar-inverse .navbar-nav > li.language a {
+    color: #3585c4;
+}
+
+.navbar-inverse .navbar-nav > li.language a:hover {
+    color: #44b1ff;
+}

@@ -13,6 +13,7 @@ use Yii;
  *
  * @property Category[] $category
  * @property LangGoods[] $langGoods
+ * @property LangGoods $translate
  * @property Image[] $image
  */
 class Goods extends \yii\db\ActiveRecord
@@ -82,6 +83,17 @@ class Goods extends \yii\db\ActiveRecord
     public function getLangGoods()
     {
         return $this->hasMany(LangGoods::class, ['goods_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[CurrentLang]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTranslate()
+    {
+        $language = Yii::$app->language;
+        return $this->hasOne(LangGoods::class, ['goods_id' => 'id'])->onCondition(['lang' => $language]);
     }
 
     /**

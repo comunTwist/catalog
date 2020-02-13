@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Category;
+use app\models\Review;
 use Yii;
 use app\models\Goods;
 use yii\data\ActiveDataProvider;
@@ -39,9 +40,20 @@ class GoodsController extends AppController
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
+        $model = $this->findModelWith($id);
+
+        $model_review = new Review();
+        $model_review->lang_goods_id = (isset($model->translate)) ? $model->translate->id : null;
+        $dataProvider = new ActiveDataProvider([
+            'query' => Review::find()->where([
+                'lang_goods_id' => $model_review->lang_goods_id
+            ]),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
         ]);
+//        debug($dataProvider); die();
+        return $this->render('view', compact('model', 'model_review', 'dataProvider'));
     }
 
     /**
@@ -76,7 +88,7 @@ class GoodsController extends AppController
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModelWith($id);
 
         if ($model->load(Yii::$app->request->post()) && !empty($model->current_category) && $model->save()) {
             // Загружаем галерею
@@ -115,13 +127,36 @@ class GoodsController extends AppController
      * @return Goods the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModelWith($id)
     {
         $model = Goods::find()
-            ->with(['category'])
+            ->with([
+                'category',
+//                'translate' => function ($q) {
+//                    $q->with([
+//                        'reviews'
+//                    ]);
+//                }
+            ])
             ->where(['id' => $id])
             ->one();
         if ($model !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    /**
+     * Finds the Goods model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Goods the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Goods::findOne($id)) !== null) {
             return $model;
         }
 

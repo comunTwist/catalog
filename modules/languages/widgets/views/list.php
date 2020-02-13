@@ -1,5 +1,3 @@
-<div class="languages">
-    <?php foreach ($array_lang as $lang) {
-        echo ' '.$lang.' ';
-    } ?>
-</div>
+<?php foreach ($array_lang as $lang) {
+    echo '<li class="language">' . $lang . '</li>';
+} ?>

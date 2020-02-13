@@ -55,9 +55,9 @@ AppAsset::register($this);
                     ['label' => Yii::t('app', 'Lang Goods'), 'url' => ['/lang-goods/index']],
                 ]
             ],
+            ListWidget::widget()
         ]
     ]);
-    echo ListWidget::widget();
     NavBar::end();
     ?>
 
