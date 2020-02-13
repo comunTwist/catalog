@@ -1,6 +1,25 @@
 <?php
 return [
     'Главная' => 'Home',
+    'Язык' => 'Lang',
+    'Название' => 'Name',
+    'Описание' => 'Description',
+    'Подробнее' => 'Details',
+    'Фотографии' => 'Photo',
+    'Редактировать' => 'Edit',
+    'Обновить' => 'Update',
+    'Удалить' => 'Delete',
     'Категории' => 'Categories',
+    'Slug категории' => 'Category slug',
+    'Создать категорию' => 'Create Category',
+    'Переводы категорий' => 'Lang Categories',
+    'Создать перевод категории' => 'Create Lang Category',
+    'Обновить перевод категории: {name}' => 'Update Lang Category: {name}',
     'Товары' => 'Goods',
+    'Стоимость' => 'Price',
+    'Переводы товаров' => 'Lang Goods',
+    'Создать товар' => 'Create Goods',
+    'Создать перевод товара' => 'Create Lang Goods',
+    'Комментарии' => 'Review',
+    'Сообщение' => 'Message'
 ];
